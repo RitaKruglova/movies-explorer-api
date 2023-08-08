@@ -1,0 +1,17 @@
+{
+  "name": "movies-explorer-api",
+  "author": "Rita Kruglova",
+  "main": "app.js",
+  "devDependencies": {
+    "eslint": "^8.46.0"
+  },
+  "dependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.0"
+  },
+  "scripts": {
+    "lint": "npx eslint .",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  }
+}
