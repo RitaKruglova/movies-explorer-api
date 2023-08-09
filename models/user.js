@@ -23,6 +23,13 @@ const userSchema = mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
+    validate: {
+      validator: (value) => {
+        const nameRegex = /^[a-zA-Zа-яА-ЯёЁ]{2,30}$/;
+        return nameRegex.test(value);
+      },
+      message: 'Имя должно содержать только буквы Английского алфавита или Кириллицы',
+    },
   },
 });
 
