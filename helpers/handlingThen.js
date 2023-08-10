@@ -1,4 +1,4 @@
-module.exports.handleThen = (data, res, statusCode = 200) => {
+const handleThen = (data, res, statusCode = 200) => {
   if (data === null) {
     res.status(404).send({ message: 'Не найдено' });
   } else {
@@ -8,3 +8,5 @@ module.exports.handleThen = (data, res, statusCode = 200) => {
       .status(statusCode).send(data);
   }
 };
+
+module.exports = handleThen;
