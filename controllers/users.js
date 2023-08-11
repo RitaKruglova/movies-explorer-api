@@ -51,7 +51,7 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '7d' },
       );
 
-      res.cookie('jwt', token, {
+      res.cookie('token', token, {
         httpOnly: false,
         maxAge: 604800000,
         secure: NODE_ENV === 'production',
@@ -64,5 +64,5 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res, next) => {
-  res.clearCookie('jwt').send();
+  res.clearCookie('token').send();
 };
