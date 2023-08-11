@@ -54,11 +54,10 @@ const movieSchema = mongoose.Schema({
       message: 'Неверный формат URL',
     },
   },
-  owner: {
+  owner: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: true,
-  },
+  }],
   movieId: {
     type: Number,
     required: true,
