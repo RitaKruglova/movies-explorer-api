@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { errors, celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/users');
@@ -14,6 +16,9 @@ mongoose.connect(DB_URL);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+app.use(helmet());
 
 app.post('/signup', celebrate({
   headers: Joi.object().keys({
