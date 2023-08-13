@@ -13,6 +13,7 @@ module.exports.handleCatch = (err, req, res, next) => {
   if (verifiedError.statusCode) {
     res.status(verifiedError.statusCode).send({ messege: verifiedError.message });
   } else {
+    console.log(err);
     res.status(500).send({ messege: 'Что-то пошло не так...(' });
   }
 };
