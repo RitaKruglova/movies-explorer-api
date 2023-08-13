@@ -5,8 +5,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
 const { errors, celebrate, Joi } = require('celebrate');
-const userRouter = require('./routes/users');
-const movieRouter = require('./routes/movies');
+// const userRouter = require('./routes/users');
+// const movieRouter = require('./routes/movies');
+const router = require('./routes/index');
 const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { handleCatch } = require('./middlewares/handlingCatch');
@@ -62,8 +63,9 @@ app.post('/signin', celebrate({
 
 app.use(auth);
 
-app.use('/users', userRouter);
-app.use('/movies', movieRouter);
+// app.use('/users', userRouter);
+// app.use('/movies', movieRouter);
+app.use('/', router);
 
 app.use('/signout', logout);
 
