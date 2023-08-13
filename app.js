@@ -4,7 +4,8 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
-const { errors, celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
+const { validateCreateUser, validateLogin } = require('./validation/auth');
 // const userRouter = require('./routes/users');
 // const movieRouter = require('./routes/movies');
 const router = require('./routes/index');
@@ -40,26 +41,9 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signup', celebrate({
-  headers: Joi.object().keys({
-    'content-type': Joi.string().valid('application/json').required(),
-  }).unknown(),
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
-  }),
-}), createUser);
+app.post('/signup', validateCreateUser, createUser);
 
-app.post('/signin', celebrate({
-  headers: Joi.object().keys({
-    'content-type': Joi.string().valid('application/json').required(),
-  }).unknown(),
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), login);
+app.post('/signin', validateLogin, login);
 
 app.use(auth);
 
