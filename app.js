@@ -10,6 +10,7 @@ const movieRouter = require('./routes/movies');
 const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { handleCatch } = require('./middlewares/handlingCatch');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3002, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
@@ -29,6 +30,8 @@ app.use(rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 }));
+
+app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -64,6 +67,7 @@ app.use('/movies', movieRouter);
 
 app.use('/signout', logout);
 
+app.use(errorLogger);
 app.use(errors());
 app.use(handleCatch);
 
