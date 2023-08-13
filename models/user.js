@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { UnauthorizedError } = require('../helpers/errorClasses');
+const { wrongEmail, wrongNameFormat, wrongLoginOrPassword } = require('../constants/errorMessages');
+const { emailRegex, nameRegex } = require('../constants/regexes');
 
 const userSchema = mongoose.Schema({
   email: {
@@ -8,11 +10,8 @@ const userSchema = mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: (value) => {
-        const emailRegex = /\w+@\w+\.\w+/;
-        return emailRegex.test(value);
-      },
-      message: 'Передан неверный email',
+      validator: (value) => emailRegex.test(value),
+      message: wrongEmail,
     },
   },
   password: {
@@ -25,11 +24,8 @@ const userSchema = mongoose.Schema({
     minlength: 2,
     maxlength: 30,
     validate: {
-      validator: (value) => {
-        const nameRegex = /^[a-zA-Zа-яА-ЯёЁ]{2,30}$/;
-        return nameRegex.test(value);
-      },
-      message: 'Имя должно содержать только буквы Английского алфавита или Кириллицы',
+      validator: (value) => nameRegex.test(value),
+      message: wrongNameFormat,
     },
   },
 });
@@ -38,13 +34,13 @@ userSchema.statics.checkPassword = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new UnauthorizedError('Вы ввели неправильный логин или пароль.'));
+        return Promise.reject(new UnauthorizedError(wrongLoginOrPassword));
       }
 
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            return Promise.reject(new UnauthorizedError('Вы ввели неправильный логин или пароль.'));
+            return Promise.reject(new UnauthorizedError(wrongLoginOrPassword));
           }
 
           return user;

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { wrongFormatUrl } = require('../constants/errorMessages');
+const { urlRegex } = require('../constants/regexes');
 
 const movieSchema = mongoose.Schema({
   country: {
@@ -25,33 +27,24 @@ const movieSchema = mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (value) => {
-        const urlRegex = /https?:\/\/w?w?w?\.?.+\..+/;
-        return urlRegex.test(value);
-      },
-      message: 'Неверный формат URL',
+      validator: (value) => urlRegex.test(value),
+      message: wrongFormatUrl,
     },
   },
   trailerLink: {
     type: String,
     required: true,
     validate: {
-      validator: (value) => {
-        const urlRegex = /https?:\/\/w?w?w?\.?.+\..+/;
-        return urlRegex.test(value);
-      },
-      message: 'Неверный формат URL',
+      validator: (value) => urlRegex.test(value),
+      message: wrongFormatUrl,
     },
   },
   thumbnail: {
     type: String,
     required: true,
     validate: {
-      validator: (value) => {
-        const urlRegex = /https?:\/\/w?w?w?\.?.+\..+/;
-        return urlRegex.test(value);
-      },
-      message: 'Неверный формат URL',
+      validator: (value) => urlRegex.test(value),
+      message: wrongFormatUrl,
     },
   },
   owner: {

@@ -6,13 +6,12 @@ const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 const { validateCreateUser, validateLogin } = require('./validation/auth');
-// const userRouter = require('./routes/users');
-// const movieRouter = require('./routes/movies');
 const router = require('./routes/index');
 const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { handleCatch } = require('./middlewares/handlingCatch');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { serverIsCrashing } = require('./constants/errorMessages');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
@@ -37,7 +36,7 @@ app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
+    throw new Error(serverIsCrashing);
   }, 0);
 });
 
