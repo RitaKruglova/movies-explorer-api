@@ -7,7 +7,7 @@ const rateLimit = require('express-rate-limit');
 const { errors, celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/users');
 const movieRouter = require('./routes/movies');
-const { createUser, login } = require('./controllers/users');
+const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { handleCatch } = require('./middlewares/handlingCatch');
 
@@ -61,6 +61,8 @@ app.use(auth);
 
 app.use('/users', userRouter);
 app.use('/movies', movieRouter);
+
+app.use('/signout', logout);
 
 app.use(errors());
 app.use(handleCatch);
