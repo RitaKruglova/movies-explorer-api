@@ -54,10 +54,10 @@ const movieSchema = mongoose.Schema({
       message: 'Неверный формат URL',
     },
   },
-  owner: [{
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-  }],
+  },
   movieId: {
     type: Number,
     required: true,
@@ -71,5 +71,6 @@ const movieSchema = mongoose.Schema({
     required: true,
   },
 });
+movieSchema.index({ owner: 1, movieId: 1 }, { unique: true });
 
 module.exports = mongoose.model('movie', movieSchema);
