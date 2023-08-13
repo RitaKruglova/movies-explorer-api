@@ -1,6 +1,7 @@
 const handleThen = require('../helpers/handlingThen');
 const Movie = require('../models/movie');
 const { NotFoundError, ForbiddenError } = require('../helpers/errorClasses');
+const { movieNotFound, impossibleRemoveForeignMovie } = require('../constants/errorMessages');
 
 module.exports.getLikedMovies = (req, res, next) => {
   Movie.find({ owner: { $in: [req.user._id] } })
@@ -45,10 +46,10 @@ module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(req.params.id)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError('Фильм не найден');
+        throw new NotFoundError(movieNotFound);
       }
       if (movie.owner !== req.user._id) {
-        throw new ForbiddenError('Невозможно удалить чужой фильм');
+        throw new ForbiddenError(impossibleRemoveForeignMovie);
       }
 
       Movie.deleteOne(movie)
