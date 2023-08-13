@@ -23,7 +23,7 @@ module.exports.changeUserInfo = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  bcrypt.hash(req.body.password, 20)
+  bcrypt.hash(req.body.password, 10)
     .then((hash) => {
       User.create({
         email: req.body.email,
@@ -46,7 +46,7 @@ module.exports.login = (req, res, next) => {
       const { SECRET_KEY = 'secret-key', NODE_ENV = 'development' } = process.env;
 
       const token = jwt.sign(
-        { _id: req.user._id },
+        { _id: user._id },
         SECRET_KEY,
         { expiresIn: '7d' },
       );

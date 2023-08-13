@@ -29,14 +29,14 @@ class NotFoundError extends Error {
 class ConflictError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode(409);
+    this.statusCode = 409;
   }
 }
 
 class InternalServerError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode(500);
+    this.statusCode = 500;
   }
 }
 
