@@ -3,7 +3,7 @@ const movieNotFound = 'Фильм не найден';
 const impossibleRemoveForeignMovie = 'Невозможно удалить чужой фильм';
 const notFound = 'Не найдено';
 const requiredAuthorization = 'Необходима авторизация';
-const emailAlreadyUsed = 'Пользователь с таким email уже существует';
+const alreadyExist = 'Уже существует';
 const unexpectedError = 'Произошла неизвестная ошибка на сервере';
 const wrongFormatUrl = 'Неверный формат URL';
 const wrongEmail = 'Передан неверный email';
@@ -16,7 +16,7 @@ module.exports = {
   impossibleRemoveForeignMovie,
   notFound,
   requiredAuthorization,
-  emailAlreadyUsed,
+  alreadyExist,
   unexpectedError,
   wrongFormatUrl,
   wrongEmail,
