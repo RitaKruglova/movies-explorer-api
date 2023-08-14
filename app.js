@@ -3,8 +3,8 @@ const express = require('express');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
+const rateLimiter = require('./helpers/rateLimiter');
 const { validateCreateUser, validateLogin } = require('./validation/auth');
 const router = require('./routes/index');
 const { createUser, login, logout } = require('./controllers/users');
@@ -25,12 +25,7 @@ app.use(cookieParser());
 
 app.use(helmet());
 
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-}));
+app.use(rateLimiter);
 
 app.use(requestLogger);
 
