@@ -12,6 +12,7 @@ const auth = require('./middlewares/auth');
 const { handleCatch } = require('./middlewares/handlingCatch');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { serverIsCrashing } = require('./constants/errorMessages');
+const { checkDomain } = require('./middlewares/cors');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
@@ -26,6 +27,8 @@ app.use(cookieParser());
 app.use(helmet());
 
 app.use(rateLimiter);
+
+app.use(checkDomain);
 
 app.use(requestLogger);
 
