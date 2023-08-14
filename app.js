@@ -13,6 +13,7 @@ const { handleCatch } = require('./middlewares/handlingCatch');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { serverIsCrashing } = require('./constants/errorMessages');
 const { checkDomain } = require('./middlewares/cors');
+const { NotFoundError } = require('./helpers/errorClasses');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
@@ -49,6 +50,10 @@ app.use(auth);
 app.use('/', router);
 
 app.use('/signout', logout);
+
+app.use('*', (req, res, next) => {
+  next(new NotFoundError('Маршрут не найден'));
+});
 
 app.use(errorLogger);
 app.use(errors());
