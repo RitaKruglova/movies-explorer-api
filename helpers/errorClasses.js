@@ -1,42 +1,44 @@
+const statusCodes = require('../constants/statusCodes');
+
 class ValidationError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 400;
+    this.statusCode = statusCodes.httpBadRequest;
   }
 }
 
 class UnauthorizedError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 401;
+    this.statusCode = statusCodes.httpUnauthorized;
   }
 }
 
 class ForbiddenError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 403;
+    this.statusCode = statusCodes.httpForbidden;
   }
 }
 
 class NotFoundError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 404;
+    this.statusCode = statusCodes.httpNotFound;
   }
 }
 
 class ConflictError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 409;
+    this.statusCode = statusCodes.httpConflict;
   }
 }
 
 class InternalServerError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = 500;
+    this.statusCode = statusCodes.httpInternalServer;
   }
 }
 

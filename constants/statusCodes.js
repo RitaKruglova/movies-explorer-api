@@ -1,0 +1,9 @@
+module.exports.httpOk = 200;
+module.exports.httpCreated = 201;
+module.exports.httpAccepted = 202;
+module.exports.httpBadRequest = 400;
+module.exports.httpUnauthorized = 401;
+module.exports.httpForbidden = 403;
+module.exports.httpNotFound = 404;
+module.exports.httpConflict = 409;
+module.exports.httpInternalServer = 500;

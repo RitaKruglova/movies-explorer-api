@@ -1,8 +1,9 @@
 const { notFound } = require('../constants/errorMessages');
+const { httpOk, httpNotFound } = require('../constants/statusCodes');
 
-const handleThen = (data, res, statusCode = 200) => {
+const handleThen = (data, res, statusCode = httpOk) => {
   if (data === null) {
-    res.status(404).send({ message: notFound });
+    res.status(httpNotFound).send({ message: notFound });
   } else {
     res.set({
       'Content-Security-Policy': 'default-src "self"',
