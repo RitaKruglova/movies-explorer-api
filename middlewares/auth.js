@@ -1,11 +1,10 @@
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { UnauthorizedError } = require('../helpers/errorClasses');
 const { requiredAuthorization } = require('../constants/errorMessages');
+const { SECRET_KEY } = require('../config');
 
 module.exports = (req, res, next) => {
   const { token } = req.cookies;
-  const { SECRET_KEY = 'secret-key' } = process.env;
 
   if (!token) {
     next(new UnauthorizedError(requiredAuthorization));
