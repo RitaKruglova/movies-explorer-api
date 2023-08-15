@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const handleThen = require('../helpers/handlingThen');
+const { SECRET_KEY, NODE_ENV } = require('../config');
 
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -43,8 +44,6 @@ module.exports.login = (req, res, next) => {
 
   User.checkPassword(email, password)
     .then((user) => {
-      const { SECRET_KEY = 'secret-key', NODE_ENV = 'development' } = process.env;
-
       const token = jwt.sign(
         { _id: user._id },
         SECRET_KEY,
