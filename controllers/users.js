@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const handleThen = require('../helpers/handlingThen');
 const { SECRET_KEY, NODE_ENV } = require('../config');
+const { httpCreated, httpAccepted } = require('../constants/statusCodes');
 
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -19,7 +20,7 @@ module.exports.changeUserInfo = (req, res, next) => {
     runValidators: true,
     upsert: false,
   })
-    .then((user) => handleThen(user, res, 202))
+    .then((user) => handleThen(user, res, httpAccepted))
     .catch(next);
 };
 
@@ -32,7 +33,7 @@ module.exports.createUser = (req, res, next) => {
         name: req.body.name,
       })
         .then((user) => {
-          handleThen(user, res, 201);
+          handleThen(user, res, httpCreated);
         })
         .catch(next);
     })
